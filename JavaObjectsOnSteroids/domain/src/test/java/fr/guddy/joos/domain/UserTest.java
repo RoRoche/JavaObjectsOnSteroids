@@ -29,7 +29,7 @@ public class UserTest {
                 new User(
                         12,
                         "Romain",
-                        "https://avatars2.githubusercontent.com/u/12625928?v=3&s=460"
+                        "https://..."
                 )
         ).hasId(12);
     }

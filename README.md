@@ -1,4 +1,8 @@
-<!-- page_number: true -->
+<!--
+$theme: gaia
+template: gaia
+$size: 16:9
+-->
 
 Java objects on steroids
 ===
@@ -8,6 +12,7 @@ Java objects on steroids
 ###### by [Romain Rochegude](https://github.com/RoRoche)
 
 ---
+<!-- page_number: true -->
 
 # Introduction
 
@@ -18,7 +23,7 @@ Java objects on steroids
 
 ---
 
-# Write simple immutable object
+# ==1.== Write simple immutable object
 
 ```java
 public final class User {
@@ -41,7 +46,7 @@ public final class User {
 
 ---
 
-# Improve pojo methods testing with [pojo-tester](http://www.pojo.pl/)
+# ==2.== Improve pojo methods testing with [pojo-tester](http://www.pojo.pl/)
 
 ## <http://www.pojo.pl/>
 
@@ -64,13 +69,10 @@ dependencies {
 ## Write unit test:
 
 ```java
-import org.junit.Test;
 import pl.pojo.tester.api.assertion.Method;
-import static 
-  pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
+import static pl.pojo.tester.api.assertion.Assertions.assertPojoMethodsFor;
 
 public class UserTest {
-
     @Test
     public void Should_Pass_All_User_Tests() {
         assertPojoMethodsFor(
@@ -84,7 +86,6 @@ public class UserTest {
                 Method.CONSTRUCTOR
         ).areWellImplemented();
     }
-
 }
 ```
 
@@ -102,10 +103,8 @@ public class UserTest {
 ## The result is:
 
 ```java
-Class fr.guddy.joos.domain.User has bad 'hashCode' method 
-  implementation.
-The hashCode method should return same hash code for equal 
-  objects.
+Class fr.guddy.joos.domain.User has bad 'hashCode' method implementation.
+The hashCode method should return same hash code for equal objects.
 Current implementation returns different values.
 Object:
 fr.guddy.joos.domain.User@7946e1f4
@@ -119,7 +118,7 @@ and
 
 ---
 
-# Improve pojo methods writing with [pojomatic](http://www.pojomatic.org/)
+# ==3.== Improve pojo methods writing with [pojomatic](http://www.pojomatic.org/)
 
 ## <http://www.pojomatic.org/>
 
@@ -127,10 +126,10 @@ and
 
 ## Why pojomatic instead of Commons Lang, Guava or Lombok?
 
-* Because pojomatic is only focused on the `equals(Object)`, `ashCode()` and `toString()` methods
+* Because pojomatic is only focused on the `equals(Object)`, `hashCode()` and `toString()` methods
 * Because Commons Lang are verbose
 * Because Guava has many other features
-* Lombok needs an extra plugin and 
+* Because Lombok needs an extra plugin and 
 
 ---
 
@@ -149,10 +148,8 @@ import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.Property;
 
 public final class User {
-
     @Property
     private final int id;
-
     // ...
 
     @Override
@@ -169,7 +166,7 @@ public final class User {
 
 ---
 
-# Improve immutable writing with [auto-value](https://github.com/google/auto/tree/master/value)
+# ==4.== Improve immutable writing with [auto-value](https://github.com/google/auto/tree/master/value)
 
 ## <https://github.com/google/auto/tree/master/value>
 
@@ -202,19 +199,14 @@ public abstract class Repo {
             final String pDescription, 
             final String pUrl) {
             
-        return new AutoValue_Repo(
-                       pId, 
-                       pName, 
-                       pDescription, 
-                       pUrl
-               );
+        return new AutoValue_Repo(pId, pName, pDescription, pUrl);
     }
 }
 ```
 
 ---
 
-# Improve object testing with [AssertJ Assertions Generator](http://joel-costigliola.github.io/assertj/assertj-assertions-generator.html)
+# ==5.== Improve object testing with [AssertJ Assertions Generator](http://joel-costigliola.github.io/assertj/assertj-assertions-generator.html)
 
 ## <http://joel-costigliola.github.io/assertj/assertj-assertions-generator.html>
 
@@ -230,25 +222,24 @@ public abstract class Repo {
 
 ---
 
-* Gradle installation:
+## Gradle installation:
 
-    * AssertJ dependency:
+### AssertJ dependency:
 
 ```
 testCompile 'org.assertj:assertj-core:3.8.0'
 ```
 
-    * assertjGen plugin installation:
+### assertjGen plugin installation:
 
 ```groovy
 buildscript {
     repositories {
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath "gradle.plugin.com.github.opengl-8080:assertjGen-gradle-plugin:1.1.3"
+        classpath "gradle.plugin.com.github.opengl-8080:
+          assertjGen-gradle-plugin:1.1.3"
     }
 }
 
@@ -257,19 +248,13 @@ apply plugin: "com.github.opengl-BOBO.assertjGen"
 
 ---
 
-    * assertjGen plugin configuration:
+### assertjGen plugin configuration:
 
 ```groovy
 assertjGen {
-    // specify target class or package names by array. (default is empty array)
     classOrPackageNames = ['fr.guddy.joos.domain']
-
-    // specify output dir(String path or File object). (default is 'src/test/java-gen')
     outputDir = 'src/test/java'
-
     cleanOnlyFiles = true
-
-    // specify AssertJ Assertions Generator dependency. (default is ver 2.0.0)
     assertjGenerator = 'org.assertj:assertj-assertions-generator:2.0.0'
 }
 ```
@@ -281,23 +266,17 @@ assertjGen {
 ## Write unit test:
 
 ```java
-import org.junit.Test;
-
 import static fr.guddy.joos.domain.UserAssert.assertThat;
 
 public class UserTest {
-
     @Test
     public void Should_Have_Matching_Id() {
         assertThat(
-                new User(
-                        12,
+                new User(12,
                         "Romain",
-                        "https://avatars2.githubusercontent.com/u/12625928?v=3&s=460"
-                )
+                        "https://...")
         ).hasId(13);
     }
-    
 }
 ```
 
@@ -308,7 +287,7 @@ public class UserTest {
 ```java
 java.lang.AssertionError: 
 Expecting id of:
-  <User{id: {12}, login: {Romain}, avatarUrl: {https://avatars2.githubusercontent.com/u/12625928?v=3&s=460}}>
+  <User{id: {12}, login: {Romain}, avatarUrl: {https://...}}>
 to be:
   <13>
 but was:
@@ -320,8 +299,9 @@ but was:
 # Conclusion
 
 * Focus on the objects
-* Less boilerplate
+* Less boilerplate code
 * On the way to DDD
+* On the way to hexagonal architecture
 
 ---
 
@@ -331,6 +311,7 @@ but was:
 * <http://www.yegor256.com/2016/07/14/who-is-object.html>
 * <http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html>
 * <http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html>
+* <http://thierry-leriche-dessirier.developpez.com/tutoriels/java/simplifier-code-guava-lombok/>
 
 ---
 
