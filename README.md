@@ -303,6 +303,8 @@ but was:
 * On the way to DDD
 * On the way to hexagonal architecture
 
+* <https://github.com/RoRoche/JavaObjectsOnSteroids>
+
 ---
 
 # Bibliography
