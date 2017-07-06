@@ -91,11 +91,11 @@ public class UserTest {
 
 ---
 
-## Why?
+## Why...
 
-* No getters/setters testing?
+* ...no getters/setters testing?
     * Because [getters/setters are evil](http://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html)
-* No `toString`?
+* ...no `toString`?
     * Because it expects a specific format that is not extensible
 
 ---
