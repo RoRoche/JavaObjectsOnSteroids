@@ -15,6 +15,10 @@ apply plugin: "idea"
 apply plugin: "net.ltgt.apt"
 apply plugin: "com.github.opengl-BOBO.assertjGen"
 
+sourceSets.main.resources {
+    srcDirs = ["src/main/java"]; include "**/*.*"
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -24,6 +28,7 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'pl.pojo:pojo-tester:0.7.5'
+    testCompile 'org.assertj:assertj-core:3.8.0'
 }
 
 assertjGen {
@@ -31,7 +36,9 @@ assertjGen {
     classOrPackageNames = ['fr.guddy.joos.domain']
 
     // specify output dir(String path or File object). (default is 'src/test/java-gen')
-    outputDir = 'src/test/java-gen'
+    outputDir = 'src/test/java'
+
+    cleanOnlyFiles = true
 
     // specify AssertJ Assertions Generator dependency. (default is ver 2.0.0)
     assertjGenerator = 'org.assertj:assertj-assertions-generator:2.0.0'

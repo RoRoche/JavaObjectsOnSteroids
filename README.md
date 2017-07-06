@@ -76,7 +76,7 @@ public class UserTest {
 
 * Result:
 
-```
+```java
 Class fr.guddy.joos.domain.User has bad 'hashCode' method implementation.
 The hashCode method should return same hash code for equal objects.
 Current implementation returns different values.
@@ -189,6 +189,14 @@ public abstract class Repo {
 
 * Gradle installation:
 
+    * AssertJ dependency:
+
+```
+testCompile 'org.assertj:assertj-core:3.8.0'
+```
+
+    * assertjGen plugin installation:
+
 ```groovy
 buildscript {
     repositories {
@@ -204,13 +212,17 @@ buildscript {
 apply plugin: "com.github.opengl-BOBO.assertjGen"
 ```
 
+    * assertjGen plugin configuration:
+
 ```groovy
 assertjGen {
     // specify target class or package names by array. (default is empty array)
     classOrPackageNames = ['fr.guddy.joos.domain']
 
     // specify output dir(String path or File object). (default is 'src/test/java-gen')
-    outputDir = 'src/test/java/fr/guddy/joos/domain/matchers'
+    outputDir = 'src/test/java'
+
+    cleanOnlyFiles = true
 
     // specify AssertJ Assertions Generator dependency. (default is ver 2.0.0)
     assertjGenerator = 'org.assertj:assertj-assertions-generator:2.0.0'
@@ -218,6 +230,41 @@ assertjGen {
 ```
 
 * Run the `assertjGen` Gradle task to generate assertion classes
+
+* Write unit test:
+
+```java
+import org.junit.Test;
+
+import static fr.guddy.joos.domain.UserAssert.assertThat;
+
+public class UserTest {
+
+    @Test
+    public void Should_Have_Matching_Id() {
+        assertThat(
+                new User(
+                        12,
+                        "Romain",
+                        "https://avatars2.githubusercontent.com/u/12625928?v=3&s=460"
+                )
+        ).hasId(13);
+    }
+    
+}
+```
+
+* The result is:
+
+```java
+java.lang.AssertionError: 
+Expecting id of:
+  <User{id: {12}, login: {Romain}, avatarUrl: {https://avatars2.githubusercontent.com/u/12625928?v=3&s=460}}>
+to be:
+  <13>
+but was:
+  <12>
+```
 
 ## Conclusion
 

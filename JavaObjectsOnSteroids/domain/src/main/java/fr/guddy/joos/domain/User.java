@@ -18,6 +18,10 @@ public final class User {
         avatarUrl = pAvatarUrl;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public boolean equals(final Object pObj) {
         return Pojomatic.equals(this, pObj);
