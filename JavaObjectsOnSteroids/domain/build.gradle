@@ -15,10 +15,6 @@ apply plugin: "idea"
 apply plugin: "net.ltgt.apt"
 apply plugin: "com.github.opengl-BOBO.assertjGen"
 
-sourceSets.main.resources {
-    srcDirs = ["src/main/java"]; include "**/*.*"
-}
-
 repositories {
     jcenter()
     maven { url '/Users/Romain/Library/Android/sdk/extras/android/m2repository' }
