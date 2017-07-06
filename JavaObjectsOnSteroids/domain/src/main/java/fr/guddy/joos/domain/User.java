@@ -1,5 +1,7 @@
 package fr.guddy.joos.domain;
 
+import android.support.annotation.VisibleForTesting;
+
 import org.pojomatic.Pojomatic;
 import org.pojomatic.annotations.Property;
 
@@ -18,6 +20,7 @@ public final class User {
         avatarUrl = pAvatarUrl;
     }
 
+    @VisibleForTesting
     public int getId() {
         return id;
     }
