@@ -212,7 +212,7 @@ public abstract class Repo {
 
 ---
 
-## Inspired by [Single Statement Unit Tests](http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html), for the following benefits:
+## Why? Refer to [Single Statement Unit Tests](http://www.yegor256.com/2017/05/17/single-statement-unit-tests.html), for the following benefits:
 
 * Reusability
 * Brevity
